@@ -47,6 +47,7 @@ class Primes
   def sequence_length
     # let's assume that Nth prime number is approximately N * ln(N)
     # according to http://en.wikipedia.org/wiki/Prime_number_theorem
-    [2, @count, @count * Math.log2(@count)].max.to_i
+    upper_bound = @count * Math.log(@count) + @count * Math.log(Math.log(@count))
+    [2, @count, upper_bound].max.to_i
   end
 end
