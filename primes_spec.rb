@@ -17,14 +17,18 @@ describe Primes do
       expect(described_class.new(15).get).to eq primes.first(15)
     end
 
+    it 'returns primes' do
+      expect(described_class.new(primes.length).get).to eq primes
+    end
+
     it 'returns first 10,000 primes' do
       expect(described_class.new(10_000).get.length).to eq 10_000
     end
 
-    it 'returns first 1,000,000 primes in 5 seconds' do
+    it 'returns first 1,000,000 primes in 8 seconds' do
       time = Benchmark.realtime { @primes = described_class.new(1_000_000).get }
       expect(@primes.length).to eq 1_000_000
-      expect(time).to be < 5
+      expect(time).to be < 8
     end
   end
 end
