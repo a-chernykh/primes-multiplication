@@ -18,7 +18,7 @@ class Multiplication
     while row < @numbers.length
       results[row] = []
       n1 = @numbers[row]
-      col = 0
+      col = row
 
       while col < @numbers.length
         n2 = @numbers[col]

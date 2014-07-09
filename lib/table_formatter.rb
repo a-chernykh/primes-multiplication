@@ -3,8 +3,8 @@ require 'stringio'
 class TableFormatter
   def initialize(values, cols: nil, rows: nil)
     @values = values
-    @cols = cols
-    @rows = rows
+    @cols   = cols
+    @rows   = rows
   end
 
   def format
@@ -31,8 +31,9 @@ class TableFormatter
     largest_row_length + 3
   end
 
-  def col_padding(col)
-    @values.map { |r| r[col].to_s.length }.max
+  def col_padding(col_index)
+    @col_padding ||= {}
+    @col_padding[col_index] ||= (0...@rows.length).map { |row| value_for(row, col_index).to_s.length }.max
   end
 
   def cols_string
@@ -49,12 +50,20 @@ class TableFormatter
     s.write '-' * (cols_string.length + 1)
   end
 
+  def value_for(row, col)
+    if col < row
+      @values[col][row - col]
+    else
+      @values[row][col - row]
+    end
+  end
+
   def print_data(s)
     @rows.each_with_index do |r, row_index|
       s.write "%-#{largest_row_length + 1}s" % r
       s.write '| '
-      @values[row_index].each_with_index do |v, c|
-        s.write "%-#{col_padding(c)}s " % v
+      (0...@cols.length).each do |col_index|
+        s.write "%-#{col_padding(col_index)}s " % value_for(row_index, col_index)
       end
       s.write "\n"
     end

@@ -6,8 +6,8 @@ describe Multiplication do
     let(:numbers) { [1, 2, 3, 4, 5] }
     subject(:results) { described_class.new(numbers).results }
 
-    it 'is an array of multiplication results' do
-      expect(results).to eq [[1, 2, 3, 4, 5], [2, 4, 6, 8, 10], [3, 6, 9, 12, 15], [4, 8, 12, 16, 20], [5, 10, 15, 20, 25]]
+    it 'is an upper right triangle of multiplication results' do
+      expect(results).to eq [[1, 2, 3, 4, 5], [4, 6, 8, 10], [9, 12, 15], [16, 20], [25]]
     end
 
     it 'can handle big tables', performance: true do

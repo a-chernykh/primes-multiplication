@@ -1,9 +1,11 @@
 require 'table_formatter'
 require 'multiplication'
+require 'benchmark'
 
 describe TableFormatter do
   describe '#format' do
     let(:primes) { [2, 3, 5, 7, 11, 13, 17, 19, 23, 29] }
+
     subject(:table) do
       results = Multiplication.new(primes).results
       described_class.new(results, rows: primes, cols: primes).format
@@ -24,6 +26,13 @@ describe TableFormatter do
 23 | 46 69 115 161 253 299 391 437 529 667 
 29 | 58 87 145 203 319 377 493 551 667 841 
 EOT
+    end
+
+    it 'performs well on large tables', performance: true do
+      numbers = (1..500).to_a
+      results = Multiplication.new(numbers).results
+      formatter = described_class.new(results, rows: numbers, cols: numbers)
+      expect(Benchmark.realtime { formatter.format }).to be < 5
     end
   end
 end
