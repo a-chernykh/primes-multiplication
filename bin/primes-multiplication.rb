@@ -5,11 +5,11 @@ require 'multiplication'
 require 'table_formatter'
 require 'benchmark'
 
-print "Give N: "
+$stderr.print "Give N: "
 n = STDIN.gets.strip.to_i
 fail 'n <= 0' if n <= 0
 
-puts
+warn
 
 time = Benchmark.realtime {
   primes = Primes.new(n).get
@@ -19,5 +19,5 @@ time = Benchmark.realtime {
   puts formatter.format
 }
 
-puts
-puts "Finished in %.3fs" % time
+warn
+warn "Finished in %.3fs" % time
