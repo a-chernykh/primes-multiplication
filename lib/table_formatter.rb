@@ -1,10 +1,10 @@
 require 'stringio'
 
 class TableFormatter
-  def initialize(values, cols = nil, rows = nil)
-    @cols = cols || values[values.keys[0]].keys
-    @rows = rows || values.keys
+  def initialize(values, cols: nil, rows: nil)
     @values = values
+    @cols = cols
+    @rows = rows
   end
 
   def format
@@ -32,11 +32,11 @@ class TableFormatter
   end
 
   def col_padding(col)
-    @values[col].values.max.to_s.length
+    @values.map { |r| r[col].to_s.length }.max
   end
 
   def cols_string
-    @cols.map { |c| "%-#{col_padding(c)}s" % c }.join ' '
+    @cols.each_with_index.map { |name, number| "%-#{col_padding(number)}s" % name }.join ' '
   end
 
   def print_cols(s)
@@ -50,10 +50,10 @@ class TableFormatter
   end
 
   def print_data(s)
-    @rows.each do |r|
+    @rows.each_with_index do |r, row_index|
       s.write "%-#{largest_row_length + 1}s" % r
       s.write '| '
-      @values[r].each do |c, v|
+      @values[row_index].each_with_index do |v, c|
         s.write "%-#{col_padding(c)}s " % v
       end
       s.write "\n"

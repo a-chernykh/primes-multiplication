@@ -4,7 +4,7 @@ A small program which prints multiplication table for N given prime numbers.
 
 # How to run
 
-Execute `ruby cli.rb` and type the value of `N`. Example:
+Execute `ruby bin/primes-multiplication.rb` and type the value of `N`. Example:
 
 ```bash
 % ruby cli.rb
@@ -38,3 +38,7 @@ Give N: 25
 89 | 178 267 445 623 979  1157 1513 1691 2047 2581 2759 3293 3649 3827 4183 4717 5251 5429 5963 6319 6497 7031 7387 7921 8633
 97 | 194 291 485 679 1067 1261 1649 1843 2231 2813 3007 3589 3977 4171 4559 5141 5723 5917 6499 6887 7081 7663 8051 8633 9409
 ```
+
+# Tests
+
+Execute `rspec` in the project root.

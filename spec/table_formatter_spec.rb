@@ -1,11 +1,12 @@
-require_relative 'table_formatter'
-require_relative 'multiplication'
+require 'table_formatter'
+require 'multiplication'
 
 describe TableFormatter do
   describe '#format' do
+    let(:primes) { [2, 3, 5, 7, 11, 13, 17, 19, 23, 29] }
     subject(:table) do
-      table = Multiplication.new([2, 3, 5, 7, 11, 13, 17, 19, 23, 29]).table
-      described_class.new(table).format
+      results = Multiplication.new(primes).results
+      described_class.new(results, rows: primes, cols: primes).format
     end
 
     it 'returns formatted table' do

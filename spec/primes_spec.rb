@@ -1,4 +1,4 @@
-require_relative 'primes'
+require 'primes'
 require 'benchmark'
 
 describe Primes do
@@ -25,10 +25,10 @@ describe Primes do
       expect(described_class.new(10_000).get.length).to eq 10_000
     end
 
-    it 'returns first 1,000,000 primes in 8 seconds' do
+    it 'returns first 1,000,000 primes in 5 seconds', performance: true do
       time = Benchmark.realtime { @primes = described_class.new(1_000_000).get }
       expect(@primes.length).to eq 1_000_000
-      expect(time).to be < 8
+      expect(time).to be < 5
     end
   end
 end
