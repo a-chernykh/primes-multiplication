@@ -24,7 +24,7 @@ class TableFormatter
   private
 
   def largest_row_length
-    @rows.map { |r| r.to_s.length }.max
+    @largest_row_length ||= @rows.map { |r| r.to_s.length }.max
   end
 
   def cols_padding
@@ -37,7 +37,7 @@ class TableFormatter
   end
 
   def cols_string
-    @cols.each_with_index.map { |name, number| "%-#{col_padding(number)}s" % name }.join ' '
+    @cols_string ||= @cols.each_with_index.map { |name, number| "%-#{col_padding(number)}s" % name }.join ' '
   end
 
   def print_cols(s)
@@ -59,13 +59,18 @@ class TableFormatter
   end
 
   def print_data(s)
-    @rows.each_with_index do |r, row_index|
-      s.write "%-#{largest_row_length + 1}s" % r
-      s.write '| '
-      (0...@cols.length).each do |col_index|
-        s.write "%-#{col_padding(col_index)}s " % value_for(row_index, col_index)
+    row = 0
+    while row < @rows.length
+      s.write "%-#{largest_row_length + 1}s| " % @rows[row]
+
+      col = 0
+      while col < @cols.length
+        s.write "%-#{col_padding(col)}s " % value_for(row, col)
+        col += 1
       end
+
       s.write "\n"
+      row += 1
     end
   end
 end

@@ -29,10 +29,10 @@ EOT
     end
 
     it 'performs well on large tables', performance: true do
-      numbers = (1..500).to_a
+      numbers = (1..1_000).to_a
       results = Multiplication.new(numbers).results
       formatter = described_class.new(results, rows: numbers, cols: numbers)
-      expect(Benchmark.realtime { formatter.format }).to be < 5
+      expect(Benchmark.realtime { formatter.format }).to be < 3
     end
   end
 end
