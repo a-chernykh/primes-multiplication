@@ -12,7 +12,7 @@ describe Multiplication do
 
     it 'can handle big tables', performance: true do
       multiplication = described_class.new((1..5_000).to_a)
-      expect(Benchmark.realtime { multiplication.results }).to be < 4
+      expect(Benchmark.realtime { multiplication.results }).to be < 2
     end
   end
 end
